@@ -1,6 +1,5 @@
-package candyStore.BackendExam.repository;
+package candyStore.BackendExam.product;
 
-import candyStore.BackendExam.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

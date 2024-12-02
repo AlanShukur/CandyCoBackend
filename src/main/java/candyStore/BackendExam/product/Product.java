@@ -1,4 +1,4 @@
-package candyStore.BackendExam.model;
+package candyStore.BackendExam.product;
 
 
 import jakarta.persistence.*;

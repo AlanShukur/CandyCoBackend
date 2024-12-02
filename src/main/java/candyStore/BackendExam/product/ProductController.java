@@ -1,8 +1,5 @@
-package candyStore.BackendExam.controller;
+package candyStore.BackendExam.product;
 
-import candyStore.BackendExam.model.Product;
-import candyStore.BackendExam.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

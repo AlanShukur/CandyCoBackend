@@ -1,7 +1,5 @@
-package candyStore.BackendExam.service;
+package candyStore.BackendExam.product;
 
-import candyStore.BackendExam.model.Product;
-import candyStore.BackendExam.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

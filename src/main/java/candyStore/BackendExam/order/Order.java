@@ -1,11 +1,11 @@
-package candyStore.BackendExam.model;
+package candyStore.BackendExam.order;
 
+import candyStore.BackendExam.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Map;
 
 @Getter @Setter
