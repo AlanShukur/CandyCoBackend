@@ -1,9 +1,11 @@
 package candyStore.BackendExam.customer;
 
+import candyStore.BackendExam.application.error.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class CustomerService {
@@ -19,7 +21,13 @@ public class CustomerService {
     }
 
     public Customer getCustomerById(long id) {
-        return customerRepo.findById(id).orElse(null);
+        Customer customer;
+        try{
+            customer = customerRepo.findById(id).orElseThrow();
+        } catch(NoSuchElementException e){
+            throw new CustomerNotFoundException("Customer " + id + " not found");
+        }
+        return customer;
     }
 
     public Customer saveCustomer(Customer customer) {
