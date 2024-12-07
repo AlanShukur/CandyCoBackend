@@ -17,10 +17,16 @@ import lombok.Setter;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
     private String name;
     private String description;
     private int price;
     private String status;
     private int quantity;
+
+
+    public void updateStatus() {
+        this.status = (this.quantity > 0) ? "Available" : "Out of Stock";
+    }
 }

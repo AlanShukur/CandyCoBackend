@@ -1,39 +1,44 @@
 package candyStore.BackendExam.order;
 
+import candyStore.BackendExam.product.Product;
+import candyStore.BackendExam.product.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-
 @Service
 public class OrderService {
-
     private final OrderRepo orderRepo;
+    private final ProductRepo productRepo;
 
     @Autowired
-    public OrderService(OrderRepo orderRepo) {
+    public OrderService(OrderRepo orderRepo, ProductRepo productRepo) {
         this.orderRepo = orderRepo;
+        this.productRepo = productRepo;
     }
-    public Order saveOrder(Order order){
-        int totalPrice = order.getProducts().stream()
-                .mapToInt(p -> fetchProductPrice(p.getProductId()) * p.getQuantity())
-                .sum() + order.getShippingCharge();
 
-        order.setTotalPrice(totalPrice);
+    public Order saveOrder(Order order) {
         return orderRepo.save(order);
     }
 
-    private int fetchProductPrice(Long productId) {
-        Map<Long, Integer> productPrices = Map.of(
-                1L, 10,
-                2L, 5
-        );
+    public Order placeOrder(Order order) {
+        for (OrderItem item : order.getItems()) {
+            Product product = productRepo.findById(item.getProduct().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Product not found: " + item.getProduct().getId()));
 
-        return productPrices.getOrDefault(productId, 0);
-    }
-    public List<Order> getOrders() {
-        return orderRepo.findAll();
-    }
+            if (product.getQuantity() < item.getQuantity()) {
+                throw new IllegalArgumentException("Insufficient stock for product: " + product.getName());
+            }
 
+            product.setQuantity(product.getQuantity() - item.getQuantity());
+            product.updateStatus();
+
+            if ("Out of Stock".equals(product.getStatus())) {
+                throw new IllegalArgumentException("Product is out of stock: " + product.getName());
+            }
+
+            productRepo.save(product);
+        }
+
+        return orderRepo.save(order);
+    }
 }

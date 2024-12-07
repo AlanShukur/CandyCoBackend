@@ -17,24 +17,12 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Customer>> getCustomer() {
-        return ResponseEntity.ok(customerService.getCustomer());
+    public ResponseEntity<List<CustomerDetailsDTO>> getAllCustomers() {
+        return ResponseEntity.ok(customerService.getAllCustomers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable long id) {
-        return ResponseEntity.ok(customerService.getCustomerById(id));
-    }
-
-    @PostMapping
-    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {
-        Customer savedCustomer = customerService.saveCustomer(customer);
-        return ResponseEntity.ok(savedCustomer);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCustomerById(@PathVariable long id) {
-        customerService.deleteCustomerById(id);
-        return ResponseEntity.ok("Customer has been deleted.");
+    public ResponseEntity<CustomerDetailsDTO> getCustomerById(@PathVariable long id) {
+        return ResponseEntity.ok(customerService.getCustomerDetails(id));
     }
 }

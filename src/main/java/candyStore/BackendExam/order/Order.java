@@ -1,12 +1,14 @@
 package candyStore.BackendExam.order;
 
+import candyStore.BackendExam.customer.Customer;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.List;
 
 @Getter @Setter
 @Entity
@@ -19,24 +21,17 @@ public class Order {
     @SequenceGenerator(name = "order_gen", sequenceName = "order_seq", allocationSize = 1)
     private long id;
 
-    @ElementCollection
-    @CollectionTable(name = "order_products", joinColumns = @JoinColumn(name = "order_id"))
-    private List<ProductQuantity> products = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    @JsonBackReference
+    private Customer customer;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items;
 
     private int shippingCharge;
     private int totalPrice;
-    private String shipped;
+
     private String shippingAddress;
-
-    @Embeddable
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class ProductQuantity {
-        private Long productId;
-        private Integer quantity;
-
-    }
-
+    private boolean shipped;
 }
