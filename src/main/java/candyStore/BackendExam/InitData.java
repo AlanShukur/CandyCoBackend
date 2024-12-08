@@ -33,7 +33,6 @@ public class InitData {
     }
 
     public void createTestData() {
-        // Generate Customers and Addresses
         List<Customer> customers = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Customer customer = new Customer();
@@ -42,7 +41,6 @@ public class InitData {
             customer.setEmail(faker.internet().emailAddress());
             customer.setPhoneNumber(faker.phoneNumber().cellPhone());
 
-            // Generate Addresses for each Customer
             List<CustomerAddress> addresses = new ArrayList<>();
             for (int j = 0; j < random.nextInt(3) + 1; j++) {
                 CustomerAddress address = new CustomerAddress();
@@ -59,7 +57,6 @@ public class InitData {
             customers.add(customerService.saveCustomer(customer));
         }
 
-        // Generate Products
         List<Product> products = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             Product product = new Product();
@@ -71,7 +68,6 @@ public class InitData {
             products.add(productService.saveProduct(product));
         }
 
-        // Generate Orders
         for (int i = 0; i < 10; i++) {
             Customer randomCustomer = customers.get(random.nextInt(customers.size()));
 

@@ -5,6 +5,8 @@ import candyStore.BackendExam.product.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService {
     private final OrderRepo orderRepo;
@@ -15,6 +17,11 @@ public class OrderService {
         this.orderRepo = orderRepo;
         this.productRepo = productRepo;
     }
+
+    public List<Order> getAllOrders() {
+        return orderRepo.findAll();
+    }
+
 
     public Order saveOrder(Order order) {
         return orderRepo.save(order);
