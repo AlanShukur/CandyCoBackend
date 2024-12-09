@@ -88,6 +88,7 @@ public class InitData {
             order.setShippingCharge(random.nextInt(20) + 5);
 
             List<OrderItem> items = new ArrayList<>();
+            int totalPrice = 0;
             for (int j = 0; j < random.nextInt(5) + 1; j++) {
                 Product randomProduct = products.get(random.nextInt(products.size()));
                 int quantity = random.nextInt(5) + 1;
@@ -97,9 +98,12 @@ public class InitData {
                 item.setProduct(randomProduct);
                 item.setQuantity(quantity);
 
+                totalPrice += randomProduct.getPrice() * quantity;
+
                 items.add(item);
             }
             order.setItems(items);
+            order.setTotalPrice(totalPrice + order.getShippingCharge());
 
             orderService.saveOrder(order);
         }

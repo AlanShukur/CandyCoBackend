@@ -22,11 +22,10 @@ public class CustomerService {
         return customerRepo.save(customer);
     }
 
-    @Transactional  //Added for tests
+    @Transactional
     public List<CustomerDetailsDTO> getAllCustomers() {
         return customerRepo.findAll().stream()
                 .map(customer -> {
-                    // Map orders to OrderDTO
                     List<OrderDTO> orders = customer.getOrders().stream()
                             .map(order -> new OrderDTO(
                                     order.getId(),
@@ -36,7 +35,6 @@ public class CustomerService {
                             ))
                             .collect(Collectors.toList());
 
-                    // Return customer details with addresses and orders
                     return new CustomerDetailsDTO(
                             customer.getId(),
                             customer.getFirstName(),
@@ -55,7 +53,6 @@ public class CustomerService {
         Customer customer = customerRepo.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + customerId));
 
-        // Map orders to OrderDTO
         List<OrderDTO> orders = customer.getOrders().stream()
                 .map(order -> new OrderDTO(
                         order.getId(),
@@ -76,7 +73,7 @@ public class CustomerService {
         );
     }
 
-    @Transactional //Added for tests
+    @Transactional
     public List<CustomerDetailsDTO> getAllCustomerDetails() {
         return customerRepo.findAll().stream()
                 .map(customer -> {

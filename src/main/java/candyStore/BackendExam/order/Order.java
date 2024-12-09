@@ -34,4 +34,5 @@ public class Order {
 
     private String shippingAddress;
     private boolean shipped;
+
 }
