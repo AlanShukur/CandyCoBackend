@@ -1,5 +1,6 @@
 package candyStore.BackendExam.product;
 
+import candyStore.BackendExam.application.error.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,12 @@ public class ProductService {
     public Product getProductById(Long id) {
         return productRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + id));
+    }
+
+    public void deleteProduct(Long productId) {
+        if (!productRepo.existsById(productId)) {
+            throw new ProductNotFoundException("Product not found with ID: " + productId);
+        }
+        productRepo.deleteById(productId);
     }
 }

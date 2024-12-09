@@ -1,5 +1,6 @@
 package candyStore.BackendExam.order;
 
+import candyStore.BackendExam.application.error.OrderNotFoundException;
 import candyStore.BackendExam.product.Product;
 import candyStore.BackendExam.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,12 @@ public class OrderService {
         order.setTotalPrice(totalPrice + order.getShippingCharge());
 
         return orderRepo.save(order);
+    }
+
+    public void deleteOrder(Long orderId) {
+        if (!orderRepo.existsById(orderId)) {
+            throw new OrderNotFoundException("Order not found with ID: " + orderId);
+        }
+        orderRepo.deleteById(orderId);
     }
 }
