@@ -25,4 +25,15 @@ public class CustomerController {
     public ResponseEntity<CustomerDetailsDTO> getCustomerById(@PathVariable long id) {
         return ResponseEntity.ok(customerService.getCustomerDetails(id));
     }
+
+    @PostMapping
+    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {
+        Customer savedCustomer = customerService.saveCustomer(customer);
+        return ResponseEntity.ok(savedCustomer);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCustomerById(@PathVariable long id) {
+        customerService.deleteCustomerById(id);
+        return ResponseEntity.ok("Customer has been deleted.");
+    }
 }

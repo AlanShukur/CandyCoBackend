@@ -98,4 +98,8 @@ public class CustomerService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public void deleteCustomerById(long id) {
+        customerRepo.deleteById(id);
+    }
 }
