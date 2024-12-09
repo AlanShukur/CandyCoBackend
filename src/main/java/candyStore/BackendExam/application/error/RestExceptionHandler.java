@@ -18,4 +18,14 @@ public class RestExceptionHandler {
                 .build();
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(value = ProductNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleProductNotFound() {
+        ExceptionResponse response = ExceptionResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .reason("Product not found")
+                .timestamp(ZonedDateTime.now(ZoneId.of("Europe/Oslo")))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }
