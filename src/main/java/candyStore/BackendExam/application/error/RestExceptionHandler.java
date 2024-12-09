@@ -28,4 +28,14 @@ public class RestExceptionHandler {
                 .build();
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(value = OrderNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleOrderNotFound() {
+        ExceptionResponse response = ExceptionResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .reason("Order not found")
+                .timestamp(ZonedDateTime.now(ZoneId.of("Europe/Oslo")))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }
